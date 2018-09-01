@@ -20,4 +20,4 @@
 >   入驻的商家进行管理的后台，主要功能是对商品的管理以及订单查询统计、资金结算等功能。
 
 ### 商城架构
-![系统架构](https://github.com/SZMOFEI/pinyougoumall.git/)
+![系统架构](https://github.com/SZMOFEI/pinyougoumall.git/pinyougoumall/pig/品优购系统架构.png)
