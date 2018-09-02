@@ -21,3 +21,7 @@
 
 ### 商城架构
 ![系统架构](\pig\品优购系统架构.png)
+
+
+### 本项目GIthub地址：https://github.com/SZMOFEI/pinyougoumall.git
+### 本项目码云地址：https://gitee.com/mohaoyang/pinyougoumall.git
