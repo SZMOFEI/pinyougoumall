@@ -3,19 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>com.pinyougou-parent</artifactId>
-        <groupId>com.com.pinyougou</groupId>
+        <groupId>com.pinyougou</groupId>
+        <artifactId>pinyougou-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pinyougou-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>com.pinyougou-sellergoods-interface</artifactId>
+    <artifactId>pinyougou-sellergoods-interface</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>com.com.pinyougou</groupId>
-            <artifactId>com.pinyougou-dao</artifactId>
+            <groupId>com.pinyougou</groupId>
+            <artifactId>pinyougou-dao</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

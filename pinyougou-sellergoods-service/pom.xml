@@ -3,16 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>com.pinyougou-parent</artifactId>
-        <groupId>com.com.pinyougou</groupId>
+        <groupId>com.pinyougou</groupId>
+        <artifactId>pinyougou-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pinyougou-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>com.pinyougou-sellergoods-service</artifactId>
+    <artifactId>pinyougou-sellergoods-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
+
     <dependencies>
+
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -46,6 +50,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
         </dependency>
+
         <!-- dubbo相关 -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -82,31 +87,30 @@
         </dependency>
 
         <!--本项目的其他模块 common dao interface -->
+
         <dependency>
-            <groupId>com.com.pinyougou</groupId>
-            <artifactId>com.pinyougou-common</artifactId>
+            <groupId>com.pinyougou</groupId>
+            <artifactId>pinyougou-dao</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.com.pinyougou</groupId>
-            <artifactId>com.pinyougou-dao</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.com.pinyougou</groupId>
-            <artifactId>com.pinyougou-sellergoods-interface</artifactId>
+            <groupId>com.pinyougou</groupId>
+            <artifactId>pinyougou-sellergoods-interface</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
-            <!-- 配置Tomcat插件 -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
                 <configuration>
-                    <path>/</path>
+                    <!-- 指定端口 -->
                     <port>9001</port>
+                    <!-- 请求路径 -->
+                    <path>/</path>
                 </configuration>
             </plugin>
         </plugins>

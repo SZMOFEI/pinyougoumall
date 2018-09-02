@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>com.pinyougou-parent</artifactId>
-        <groupId>com.com.pinyougou</groupId>
+        <groupId>com.pinyougou</groupId>
+        <artifactId>pinyougou-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../com.pinyougou-parent/pom.xml</relativePath>
+        <relativePath>../pinyougou-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>com.pinyougou-manager-web</artifactId>
+    <artifactId>pinyougou-manager-web</artifactId>
     <packaging>war</packaging>
     <dependencies>
         <!-- Spring -->
@@ -82,14 +82,15 @@
         </dependency>
         <!--本项目其他模块的依赖   common interface-->
         <dependency>
-            <groupId>com.com.pinyougou</groupId>
-            <artifactId>com.pinyougou-common</artifactId>
+            <groupId>com.pinyougou</groupId>
+            <artifactId>pinyougou-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.com.pinyougou</groupId>
-            <artifactId>com.pinyougou-sellergoods-interface</artifactId>
+            <groupId>com.pinyougou</groupId>
+            <artifactId>pinyougou-sellergoods-interface</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+
         </dependency>
     </dependencies>
     <build>
