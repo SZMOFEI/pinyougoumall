@@ -1,6 +1,7 @@
 package com.pinyougou.sellergoods.service;
 
-import com.pinyougou.pojo.TbBrand;
+import com.pinyougou.entity.PageResult;
+import com.pinyougou.pojo.Brand;
 
 import java.util.List;
 
@@ -12,5 +13,16 @@ import java.util.List;
 public interface BrandService {
 
 
-    List<TbBrand> listBrand ();
+    List<Brand> listBrand ();
+
+    /**
+     *
+     * 功能描述: 品牌分页
+     *
+     * @param: [pageNum, rows]
+     * @return: com.pinyougou.entity.PageResult
+     * @auther: mofei
+     * @date: 2018/9/5 10:16
+     */
+    PageResult  findPage(int pageNum, int pageSize);
 }
