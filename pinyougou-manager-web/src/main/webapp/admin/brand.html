@@ -19,37 +19,30 @@
 	<script>
 		var app = angular.module("pinyougou",["pagination"]);
 		app.controller("brandController",function ($scope,$http) {
-			$scope.findAll= function(){
-			    $http.get("../brand/findAll.do").success(
-			        function (response) {
-						$scope.list =response;
-                    }
-				);
-			};
-            <!--切换页码-->
-            $scope.reloadList=function(){
-				$scope.findPage($scope.pagination.currentPage,
-				$scope.pagination.itemsPerPage);
-            };
-			<!--分页控件配置-->
-			$scope.paginationConf ={
-                currentPage :1,
-				itemsPerPage: 10,
-				totalItems: 10,
-				perPageOptions: [10,20,30,40,50],
-                onChange: function () {
-			        $scope.reloadList();
-                }
-			};
 
-			<!--执行分页方法-->
+            //分页控件配置
+            $scope.paginationConf = {
+                currentPage: 1,
+                totalItems: 10,
+                itemsPerPage: 10,
+                perPageOptions: [10, 20, 30, 40, 50],
+                onChange: function(){
+					$scope.reloadList();
+                }
+            };
+
+            $scope.reloadList=function () {
+                $scope.findPage($scope.paginationConf.currentPage,$scope.paginationConf.itemsPerPage);
+            }
+
+            <!--执行分页方法-->
 			$scope.findPage=function(page,rows){
 				$http.get('../brand/findPage.do?page='+page+'&rows='+rows).success(
 				    function (response) {
 						$scope.list = response.rows;
 						$scope.paginationConf.totalItems = response.total;
                     }
-				)
+				);
             }
         });
 	</script>
@@ -115,8 +108,6 @@ ng-app="pinyougou" ng-controller="brandController" >
 							 
                         </div>
                         <!-- 数据表格 /-->
-                        
-                        
                         
                         
                      </div>

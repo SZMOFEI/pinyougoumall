@@ -20,6 +20,9 @@ public class PageResult implements Serializable {
         this.rows= rows;
     }
 
+    public PageResult() {
+    }
+
     public Long getTotal() {
         return total;
     }
