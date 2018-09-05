@@ -23,28 +23,67 @@ public class BrandController {
     private BrandService brandService;
 
     @RequestMapping("/findAll")
-    public List<Brand> listBrand () {
-        return  brandService.listBrand();
+    public List<Brand> listBrand() {
+        return brandService.listBrand();
     }
 
     @RequestMapping("/findPage")
-    public PageResult findPage(int page,int rows) {
-        return brandService.findPage(page,rows);
+    public PageResult findPage(int page, int rows) {
+        return brandService.findPage(page, rows);
     }
 
     /**
      * 增加
+     *
      * @param brand 品牌
      * @return Result
      */
     @RequestMapping("/add")
-    public Result addBrand(@RequestBody Brand brand){
+    public Result addBrand(@RequestBody Brand brand) {
         try {
             brandService.addBrand(brand);
-            return new Result(true,"增加成功");
+            return new Result(true, "增加成功");
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,"添加失败");
+            return new Result(false, "添加失败");
+        }
+    }
+
+    /**
+     * 修改
+     *
+     * @param brand 品牌
+     */
+    @RequestMapping("/update")
+    public Result update(@RequestBody Brand brand) {
+
+        try {
+            brandService.updateBrand(brand);
+            return new Result(true, "修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "修改失败");
+        }
+    }
+
+    @RequestMapping("/findOne")
+    public Brand findOne(Long id) {
+        return brandService.findOne(id);
+    }
+
+    /**
+     * 删除
+     *
+     * @param ids 编号
+     */
+    @RequestMapping("/delete")
+    public Result delete(Long[] ids) {
+        try {
+            brandService.deleteBrand(ids);
+            return new Result(true, "删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "删除失败");
         }
     }
 }
