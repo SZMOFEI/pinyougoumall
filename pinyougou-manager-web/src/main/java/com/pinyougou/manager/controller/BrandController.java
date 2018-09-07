@@ -28,8 +28,13 @@ public class BrandController {
     }
 
     @RequestMapping("/findPage")
-    public PageResult findPage(int page, int rows) {
+    public PageResult findPage( int page, int rows) {
         return brandService.findPage(page, rows);
+    }
+
+    @RequestMapping("/search")
+    public PageResult search(@RequestBody Brand brand,int page, int rows) {
+        return brandService.findPage(brand,page, rows);
     }
 
     /**

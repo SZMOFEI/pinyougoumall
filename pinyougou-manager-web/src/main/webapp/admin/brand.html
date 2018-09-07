@@ -4,12 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>品牌管理</title>
-    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
-          name="viewport">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"name="viewport">
     <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
-    <link rel="stylesheet"
-          href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -21,7 +19,6 @@
     <script>
         var app = angular.module("pinyougou", ["pagination"]);
         app.controller("brandController", function ($scope, $http) {
-
             //分页控件配置
             $scope.paginationConf = {
                 currentPage: 1,
@@ -34,15 +31,15 @@
             };
 
             $scope.reloadList = function () {
-                $scope.findPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
+                $scope.search($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
             }
 
-            <!--执行分页方法-->
-            $scope.findPage = function (page, rows) {
-                $http.get('../brand/findPage.do?page=' + page + '&rows=' + rows).success(
-                    function (response) {
-                        $scope.list = response.rows;
-                        $scope.paginationConf.totalItems = response.total;
+            //分页
+            $scope.findPage=function(page,size){
+                $http.get('../brand/findPage.do?page='+page +'&size='+size).success(
+                    function(response){
+                        $scope.list=response.rows;//显示当前页数据
+                        $scope.paginationConf.totalItems=response.total;//更新总记录数
                     }
                 );
             }
@@ -91,6 +88,16 @@
                     }
                 );
             }
+
+            $scope.searchEntity= {};
+            $scope.search=function (page, size) {
+                $http.post("../brand/search.do?page="+page+"&&size="+size,$scope.searchEntity).success(
+                    function (response) {
+                        $scope.list= response.rows;
+                        $scope.paginationConf.totalItems=response.total;
+                    }
+                );
+            };
         });
     </script>
 
@@ -132,7 +139,12 @@
             </div>
         </div>
         <!--工具栏/-->
-
+        <div class="box-tools pull-right">
+            <div class="has-feedback">
+                品牌名称:<input ng-model="searchEntity.name"> 品牌首字母:<input ng-model="searchEntity.firstChar">
+                <button  class="btn btn-default" ng-click="reloadList()">查询</button>
+            </div>
+        </div>
         <!--数据列表-->
         <table id="dataList"
                class="table table-bordered table-striped table-hover dataTable">

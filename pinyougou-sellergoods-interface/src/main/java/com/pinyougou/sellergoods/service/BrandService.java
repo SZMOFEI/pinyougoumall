@@ -24,6 +24,16 @@ public interface BrandService {
      * @auther: mofei
      * @date: 2018/9/5 10:16
      */
+    PageResult findPage(Brand brand,int pageNum, int pageSize);
+    /**
+     *
+     * 功能描述: 品牌分页
+     *
+     * @param: [pageNum, rows]
+     * @return: PageResult
+     * @auther: mofei
+     * @date: 2018/9/5 10:16
+     */
     PageResult findPage(int pageNum, int pageSize);
 
     /**
