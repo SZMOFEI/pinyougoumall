@@ -29,4 +29,9 @@ public class BrandController {
     public PageResult findPage(int page,int rows) {
         return brandService.findPage(page,rows);
     }
+    @RequestMapping("/add")
+    public void  addBrand(Brand brand) {
+
+    }
+
 }
