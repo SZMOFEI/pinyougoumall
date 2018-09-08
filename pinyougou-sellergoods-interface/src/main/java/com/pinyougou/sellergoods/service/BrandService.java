@@ -1,6 +1,6 @@
 package com.pinyougou.sellergoods.service;
 
-import entity.PageResult;
+import com.pinyougou.entity.PageResult;
 import com.pinyougou.pojo.Brand;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public interface BrandService {
 
 
-    List<Brand> listBrand ();
+    List<Brand> listBrand();
 
     /**
      *
@@ -24,7 +24,17 @@ public interface BrandService {
      * @auther: mofei
      * @date: 2018/9/5 10:16
      */
-    PageResult  findPage(int pageNum, int pageSize);
+    PageResult findPage(Brand brand,int pageNum, int pageSize);
+    /**
+     *
+     * 功能描述: 品牌分页
+     *
+     * @param: [pageNum, rows]
+     * @return: PageResult
+     * @auther: mofei
+     * @date: 2018/9/5 10:16
+     */
+    PageResult findPage(int pageNum, int pageSize);
 
     /**
      * 添加品牌
@@ -49,5 +59,5 @@ public interface BrandService {
      * 删除
      * @param id 编号
      */
-    void deleteBrand(Long[] id );
+    void deleteBrand(Long[] id);
 }

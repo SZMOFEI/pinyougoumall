@@ -1,10 +1,10 @@
 package com.pinyougou.manager.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import entity.PageResult;
+import com.pinyougou.entity.PageResult;
+import com.pinyougou.entity.Result;
 import com.pinyougou.pojo.Brand;
 import com.pinyougou.sellergoods.service.BrandService;
-import entity.Result;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,8 +28,13 @@ public class BrandController {
     }
 
     @RequestMapping("/findPage")
-    public PageResult findPage(int page, int rows) {
+    public PageResult findPage( int page, int rows) {
         return brandService.findPage(page, rows);
+    }
+
+    @RequestMapping("/search")
+    public PageResult search(@RequestBody Brand brand,int page, int rows) {
+        return brandService.findPage(brand,page, rows);
     }
 
     /**
