@@ -3,11 +3,11 @@ package com.pinyougou.sellergoods.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.pinyougou.entity.PageResult;
 import com.pinyougou.mapper.BrandMapper;
 import com.pinyougou.pojo.Brand;
 import com.pinyougou.pojo.BrandExample;
 import com.pinyougou.sellergoods.service.BrandService;
+import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

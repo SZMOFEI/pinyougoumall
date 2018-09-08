@@ -1,7 +1,7 @@
 package com.pinyougou.sellergoods.service;
 
-import com.pinyougou.entity.PageResult;
 import com.pinyougou.pojo.Brand;
+import entity.PageResult;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public interface BrandService {
      * @auther: mofei
      * @date: 2018/9/5 10:16
      */
-    PageResult findPage(Brand brand,int pageNum, int pageSize);
+    PageResult findPage(Brand brand, int pageNum, int pageSize);
     /**
      *
      * 功能描述: 品牌分页
