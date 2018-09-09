@@ -31,12 +31,12 @@ public class BrandServiceImpl implements BrandService {
     public PageResult findPage(Brand brand, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         BrandExample example = new BrandExample();
-        BrandExample.Criteria criteria = example.createCriteria();
-        if (brand!=null){
-            if (brand.getName()!=null&&brand.getName().length()>0){
-                criteria.andNameLike("%"+brand.getName()+"%");
+        if (brand != null) {
+            BrandExample.Criteria criteria = example.createCriteria();
+            if (brand.getName() != null && brand.getName().length() > 0) {
+                criteria.andNameLike("%" + brand.getName() + "%");
             }
-            if (brand.getFirstChar()!=null&&brand.getFirstChar().length()>0){
+            if (brand.getFirstChar() != null && brand.getFirstChar().length() > 0) {
                 criteria.andFirstCharEqualTo(brand.getFirstChar());
             }
         }
@@ -47,9 +47,8 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public PageResult findPage(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        Page<Brand> page = (Page<Brand>) brandMapper.selectByExample(null);
-        return new PageResult(page.getTotal(), page.getResult());
+        return findPage(null, pageNum, pageSize);
+
     }
 
     @Override
@@ -58,7 +57,12 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public void updateBrand(Brand brand) {
+    public void updateBrand(Brand brand) throws Exception {
+        if (brand != null) {
+            if (brand.getFirstChar() != null && brand.getFirstChar().length() > 1) {
+                throw new Exception();
+            }
+        }
         brandMapper.updateByPrimaryKey(brand);
     }
 

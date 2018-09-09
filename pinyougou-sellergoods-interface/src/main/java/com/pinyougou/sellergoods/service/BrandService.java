@@ -46,7 +46,7 @@ public interface BrandService {
      * 修改品牌
      * @param brand 品牌信息
      */
-    void updateBrand(Brand brand);
+    void updateBrand(Brand brand) throws Exception;
 
     /**
      * 根据ID查找品牌
