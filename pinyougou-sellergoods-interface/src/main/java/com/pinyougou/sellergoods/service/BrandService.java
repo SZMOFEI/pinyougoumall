@@ -1,7 +1,7 @@
 package com.pinyougou.sellergoods.service;
 
-import com.pinyougou.entity.PageResult;
 import com.pinyougou.pojo.Brand;
+import entity.PageResult;
 
 import java.util.List;
 
@@ -24,6 +24,16 @@ public interface BrandService {
      * @auther: mofei
      * @date: 2018/9/5 10:16
      */
+    PageResult findPage(Brand brand, int pageNum, int pageSize);
+    /**
+     *
+     * 功能描述: 品牌分页
+     *
+     * @param: [pageNum, rows]
+     * @return: PageResult
+     * @auther: mofei
+     * @date: 2018/9/5 10:16
+     */
     PageResult findPage(int pageNum, int pageSize);
 
     /**
@@ -36,7 +46,7 @@ public interface BrandService {
      * 修改品牌
      * @param brand 品牌信息
      */
-    void updateBrand(Brand brand);
+    void updateBrand(Brand brand) throws Exception;
 
     /**
      * 根据ID查找品牌
