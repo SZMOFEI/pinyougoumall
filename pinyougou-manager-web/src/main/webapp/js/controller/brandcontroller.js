@@ -1,10 +1,36 @@
-app.controller("brandController", function ($scope,$controller, brandService) {
+app.controller('brandcontroller' ,function($scope,brandService){
 
-    $controller('baseController',{$scope:$scope});
 
+    $scope.reloadList = function () {
+        $scope.search($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
+    }
+//分页控件配置
+    $scope.paginationConf = {
+        currentPage: 1,
+        totalItems: 10,
+        itemsPerPage: 10,
+        perPageOptions: [10, 20, 30, 40, 50],
+        onChange: function () {
+            $scope.reloadList();
+        }
+    };
+
+
+
+    //更新复选框
+    $scope.selectIds = [];
+    $scope.updateSelection = function ($event, id) {
+        if ($event.target.checked) {
+            $scope.selectIds.push(id);
+        } else {
+            var index = $scope.selectIds.indexOf(id);
+            $scope.selectIds.splice(index);
+        }
+
+    }
     <!--执行分页方法-->
     $scope.findPage = function (page, rows) {
-        brandservice.findPage().success(
+        brandService.findPage().success(
             function (response) {
                 $scope.list = response.rows;
                 $scope.paginationConf.totalItems = response.total;
@@ -13,11 +39,13 @@ app.controller("brandController", function ($scope,$controller, brandService) {
     }
     //保存
     $scope.save = function () {
-        var methodName = 'add';
+        var object = null;
         if ($scope.entity.id != null) {
-            methodName = "update";
+            object = brandService.update($scope.entity);
+        }else {
+            object = brandService.add($scope.entity);
         }
-        brandservice.save(methodName, $scope.entity).success(
+        object.success(
             function (response) {
                 if (response.success) {
                     $scope.reloadList();
@@ -29,7 +57,7 @@ app.controller("brandController", function ($scope,$controller, brandService) {
     }
 
     $scope.findOne = function (id) {
-        brandservice.findOne(id).success(
+        brandService.findOne(id).success(
             function (response) {
                 $scope.entity = response;
             }
@@ -40,7 +68,7 @@ app.controller("brandController", function ($scope,$controller, brandService) {
 
     //删除
     $scope.delete = function () {
-        brandservice.delete($scope.selectIds).success(
+        brandService.delete($scope.selectIds).success(
             function (response) {
                 if (response.success) {
                     $scope.reloadList();
@@ -53,7 +81,7 @@ app.controller("brandController", function ($scope,$controller, brandService) {
 
     $scope.searchEntity = {};
     $scope.search = function (page, rows) {
-        brandservice.search(page, rows, $scope.searchEntity).success(
+        brandService.search(page, rows, $scope.searchEntity).success(
             function (response) {
                 $scope.list = response.rows;
                 $scope.paginationConf.totalItems = response.total;
