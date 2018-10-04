@@ -32,8 +32,8 @@ app.controller('typeTemplateController' ,function($scope,$controller,typeTemplat
 	}
 	
 	//保存 
-	$scope.save=function(){				
-		var serviceObject;//服务层对象  				
+	$scope.save=function(){
+		var serviceObject;//服务层对象
 		if($scope.entity.id!=null){//如果有ID
 			serviceObject=typeTemplateService.update( $scope.entity ); //修改  
 		}else{
