@@ -1,6 +1,8 @@
 package com.pinyougou.pojo;
 
-public class SpecificationOption {
+import java.io.Serializable;
+
+public class SpecificationOption implements Serializable{
     private Long id;
 
     private String optionName;

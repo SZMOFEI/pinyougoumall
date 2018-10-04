@@ -1,6 +1,8 @@
 package com.pinyougou.pojo;
 
-public class TypeTemplate {
+import java.io.Serializable;
+
+public class TypeTemplate implements Serializable{
     private Long id;
 
     private String name;
