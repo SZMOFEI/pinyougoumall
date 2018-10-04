@@ -1,5 +1,6 @@
 package com.pinyougou.sellergoods.service;
 import com.pinyougou.pojo.Specification;
+import com.pinyougou.pojogroup.SpecificationVo;
 import entity.PageResult;
 
 import java.util.List;
@@ -27,13 +28,13 @@ public interface SpecificationService {
 	/**
 	 * 增加
 	*/
-	public void add(Specification specification);
+	public void add(SpecificationVo vo);
 	
 	
 	/**
 	 * 修改
 	 */
-	public void update(Specification specification);
+	public void update(SpecificationVo specification);
 	
 
 	/**
@@ -41,7 +42,7 @@ public interface SpecificationService {
 	 * @param id
 	 * @return
 	 */
-	public Specification findOne(Long id);
+	public SpecificationVo findOne(Long id);
 	
 	
 	/**

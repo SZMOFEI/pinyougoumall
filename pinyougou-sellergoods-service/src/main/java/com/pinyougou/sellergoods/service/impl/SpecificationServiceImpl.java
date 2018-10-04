@@ -3,9 +3,13 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.pinyougou.mapper.SpecificationMapper;
+import com.pinyougou.mapper.SpecificationOptionMapper;
 import com.pinyougou.pojo.Specification;
 import com.pinyougou.pojo.SpecificationExample;
 import com.pinyougou.pojo.SpecificationExample.Criteria;
+import com.pinyougou.pojo.SpecificationOption;
+import com.pinyougou.pojo.SpecificationOptionExample;
+import com.pinyougou.pojogroup.SpecificationVo;
 import com.pinyougou.sellergoods.service.SpecificationService;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +26,9 @@ public class SpecificationServiceImpl implements SpecificationService {
 
 	@Autowired
 	private SpecificationMapper specificationMapper;
-	
+	@Autowired
+	private SpecificationOptionMapper specificationOptionMapper;
+
 	/**
 	 * 查询全部
 	 */
@@ -45,8 +51,13 @@ public class SpecificationServiceImpl implements SpecificationService {
 	 * 增加
 	 */
 	@Override
-	public void add(Specification specification) {
-		specificationMapper.insert(specification);		
+	public void add(SpecificationVo vo) {
+		specificationMapper.insert(vo.getSpecification());
+		for (SpecificationOption specificationOption : vo.getSpecificationOptionList()) {
+			Long id = vo.getSpecification().getId();
+			specificationOption.setSpecId(id);
+			specificationOptionMapper.insert(specificationOption);
+		}
 	}
 
 	
@@ -54,8 +65,17 @@ public class SpecificationServiceImpl implements SpecificationService {
 	 * 修改
 	 */
 	@Override
-	public void update(Specification specification){
-		specificationMapper.updateByPrimaryKey(specification);
+	public void update(SpecificationVo vo){
+		specificationMapper.updateByPrimaryKey(vo.getSpecification());
+		SpecificationOptionExample optionExample = new SpecificationOptionExample();
+		SpecificationOptionExample.Criteria criteria = optionExample.createCriteria();
+		criteria.andSpecIdEqualTo(vo.getSpecification().getId());
+		specificationOptionMapper.deleteByExample(optionExample);
+
+		for (SpecificationOption specificationOption : vo.getSpecificationOptionList()) {
+			specificationOption.setSpecId(vo.getSpecification().getId());
+			specificationOptionMapper.insert(specificationOption);
+		}
 	}	
 	
 	/**
@@ -64,8 +84,17 @@ public class SpecificationServiceImpl implements SpecificationService {
 	 * @return
 	 */
 	@Override
-	public Specification findOne(Long id){
-		return specificationMapper.selectByPrimaryKey(id);
+	public SpecificationVo findOne(Long id){
+		Specification specification = specificationMapper.selectByPrimaryKey(id);
+
+		SpecificationOptionExample optionExample = new SpecificationOptionExample();
+		SpecificationOptionExample.Criteria criteria = optionExample.createCriteria();
+		criteria.andSpecIdEqualTo(id);
+		List<SpecificationOption> optionList = specificationOptionMapper.selectByExample(optionExample);
+		SpecificationVo vo = new SpecificationVo();
+		vo.setSpecification(specification);
+		vo.setSpecificationOptionList(optionList);
+		return vo;
 	}
 
 	/**
@@ -75,6 +104,10 @@ public class SpecificationServiceImpl implements SpecificationService {
 	public void delete(Long[] ids) {
 		for(Long id:ids){
 			specificationMapper.deleteByPrimaryKey(id);
+			SpecificationOptionExample optionExample = new SpecificationOptionExample();
+			SpecificationOptionExample.Criteria criteria = optionExample.createCriteria();
+			criteria.andSpecIdEqualTo(id);
+			specificationOptionMapper.deleteByExample(optionExample);
 		}		
 	}
 	
