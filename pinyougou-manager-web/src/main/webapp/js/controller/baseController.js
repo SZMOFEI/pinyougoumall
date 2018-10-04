@@ -25,4 +25,18 @@ app.controller('baseController',function ($scope) {
             $scope.reloadList();
         }
     };
+
+    //在json中提取某个元素组成新的字符串
+    $scope.jsonToString=function (jsonString ,key) {
+        var json = JSON.parse(jsonString);
+        var value="";
+        for (var i =0;i<json.length;i++){
+            //这里的写法，因为数组中第一个元素，然后{}中取元素可以是a[text]的方式
+            if (i>0){
+                value+=",";
+            }
+            value+=json[i][key];
+        }
+        return value;
+    }
 })
