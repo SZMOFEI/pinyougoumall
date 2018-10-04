@@ -5,6 +5,7 @@ import com.pinyougou.pojo.SpecificationExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SpecificationMapper {
     int countByExample(SpecificationExample example);
@@ -28,4 +29,6 @@ public interface SpecificationMapper {
     int updateByPrimaryKeySelective(Specification record);
 
     int updateByPrimaryKey(Specification record);
+
+    List<Map> selectSpecificationList();
 }
