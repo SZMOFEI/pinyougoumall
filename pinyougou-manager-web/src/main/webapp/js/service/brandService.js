@@ -23,4 +23,10 @@ app.service('brandService',function ($http) {
     this.delete = function (ids) {
         return $http.get('../brand/delete.do?ids='+ids);
     }
+
+    //品牌下来
+    this.selectOptionList=function () {
+        alert("service");
+        return $http.get('../brand/selectOptionList.do');
+    }
 });
