@@ -90,12 +90,18 @@ app.controller('typeTemplateController' ,function($scope,$controller,typeTemplat
     $scope.specicationList={data:[]};//规格列表
     //读取品牌列表
     $scope.findspecicationList=function(){
-    	alert("规格");
         specificationService.selectSpecificationList().success(
             function(response){
                 $scope.specicationList={data:response};
             }
         );
     }
+    //增加表格行
+    $scope.addTableRow=function () {
+        $scope.entity.customAttributeItems.push({});
+    }
 
+    $scope.deleteTableRow=function (index) {
+        $scope.entity.customAttributeItems.splice(index,1);
+    }
 });

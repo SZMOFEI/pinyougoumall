@@ -26,7 +26,6 @@ app.service('brandService',function ($http) {
 
     //品牌下来
     this.selectOptionList=function () {
-        alert("service");
         return $http.get('../brand/selectOptionList.do');
     }
 });
