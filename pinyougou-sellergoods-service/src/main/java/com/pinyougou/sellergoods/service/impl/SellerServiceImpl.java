@@ -59,8 +59,15 @@ public class SellerServiceImpl implements SellerService {
 	@Override
 	public void update(Seller seller){
 		sellerMapper.updateByPrimaryKey(seller);
-	}	
-	
+	}
+
+	@Override
+	public void update(String sellerId, String status) {
+		Seller seller = sellerMapper.selectByPrimaryKey(sellerId);
+		seller.setStatus(status);
+		sellerMapper.updateByPrimaryKey(seller);
+	}
+
 	/**
 	 * 根据ID获取实体
 	 * @param id
