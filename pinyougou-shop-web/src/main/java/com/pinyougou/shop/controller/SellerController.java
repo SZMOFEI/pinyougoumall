@@ -3,6 +3,7 @@ package com.pinyougou.shop.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.pinyougou.pojo.Seller;
 import com.pinyougou.sellergoods.service.SellerService;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import entity.PageResult;
 import entity.Result;
 import org.springframework.web.bind.annotation.RequestBody;
