@@ -243,4 +243,34 @@ public class Seller implements Serializable {
     public void setBankName(String bankName) {
         this.bankName = bankName == null ? null : bankName.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Seller{" +
+                "sellerId='" + sellerId + '\'' +
+                ", name='" + name + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", status='" + status + '\'' +
+                ", addressDetail='" + addressDetail + '\'' +
+                ", linkmanName='" + linkmanName + '\'' +
+                ", linkmanQq='" + linkmanQq + '\'' +
+                ", linkmanMobile='" + linkmanMobile + '\'' +
+                ", linkmanEmail='" + linkmanEmail + '\'' +
+                ", licenseNumber='" + licenseNumber + '\'' +
+                ", taxNumber='" + taxNumber + '\'' +
+                ", orgNumber='" + orgNumber + '\'' +
+                ", address=" + address +
+                ", logoPic='" + logoPic + '\'' +
+                ", brief='" + brief + '\'' +
+                ", createTime=" + createTime +
+                ", legalPerson='" + legalPerson + '\'' +
+                ", legalPersonCardId='" + legalPersonCardId + '\'' +
+                ", bankUser='" + bankUser + '\'' +
+                ", bankName='" + bankName + '\'' +
+                '}';
+    }
 }
