@@ -1,5 +1,6 @@
 package com.pinyougou.sellergoods.service;
 import com.pinyougou.pojo.Goods;
+import com.pinyougou.pojogroup.GoodsDTO;
 import entity.PageResult;
 
 import java.util.List;
@@ -28,6 +29,11 @@ public interface GoodsService {
 	 * 增加
 	*/
 	public void add(Goods goods);
+
+	/**
+	 * 增加商品
+	*/
+	public void add(GoodsDTO goods);
 	
 	
 	/**

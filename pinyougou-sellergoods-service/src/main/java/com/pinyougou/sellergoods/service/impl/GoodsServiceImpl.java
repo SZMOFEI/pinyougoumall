@@ -1,11 +1,14 @@
 package com.pinyougou.sellergoods.service.impl;
+
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.pinyougou.mapper.GoodsDescMapper;
 import com.pinyougou.mapper.GoodsMapper;
 import com.pinyougou.pojo.Goods;
 import com.pinyougou.pojo.GoodsExample;
 import com.pinyougou.pojo.GoodsExample.Criteria;
+import com.pinyougou.pojogroup.GoodsDTO;
 import com.pinyougou.sellergoods.service.GoodsService;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,9 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Autowired
 	private GoodsMapper goodsMapper;
-	
+	@Autowired
+	private GoodsDescMapper goodsDescMapper;
+
 	/**
 	 * 查询全部
 	 */
@@ -49,7 +54,20 @@ public class GoodsServiceImpl implements GoodsService {
 		goodsMapper.insert(goods);		
 	}
 
-	
+	/**
+	 * 增加商品
+	 * @param dto 包装类
+	 */
+	@Override
+	public void add(GoodsDTO dto) {
+		//设置为申请状态
+		dto.getGoods().setAuditStatus("0");
+		goodsMapper.insert(dto.getGoods());
+		dto.getGoodsDesc().setGoodsId(dto.getGoods().getId());
+		goodsDescMapper.insert(dto.getGoodsDesc());
+	}
+
+
 	/**
 	 * 修改
 	 */

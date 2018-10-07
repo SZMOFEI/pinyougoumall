@@ -2,9 +2,11 @@ package com.pinyougou.shop.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.pinyougou.pojo.Goods;
+import com.pinyougou.pojogroup.GoodsDTO;
 import com.pinyougou.sellergoods.service.GoodsService;
 import entity.PageResult;
 import entity.Result;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,12 +43,29 @@ public class GoodsController {
 	public PageResult  findPage(int page,int rows){			
 		return goodsService.findPage(page, rows);
 	}
-	
+
 	/**
+	 * 增加
+	 * @param dto
+	 * @return Result
+	 */
+	@RequestMapping("/add")
+	public Result add(@RequestBody GoodsDTO dto){
+		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+		dto.getGoods().setSellerId(sellerId);
+		try {
+			goodsService.add(dto);
+			return new Result(true, "增加成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "增加失败");
+		}
+	}
+/*	*//**
 	 * 增加
 	 * @param goods
 	 * @return
-	 */
+	 *//*
 	@RequestMapping("/add")
 	public Result add(@RequestBody Goods goods){
 		try {
@@ -56,7 +75,7 @@ public class GoodsController {
 			e.printStackTrace();
 			return new Result(false, "增加失败");
 		}
-	}
+	}*/
 	
 	/**
 	 * 修改
