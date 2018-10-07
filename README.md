@@ -1,9 +1,5 @@
-#品优购第一天
-导读
--   目标1：了解电商行业特点以及理解电商的模式
--   目标2：了解整体品优购的架构特点
--   目标3：能够运用Dubbox+SSM搭建分布式应用
--   目标4：搭建工程框架，完成品牌列表后端代码
+#品优购商城
+
 
 ### 品优购项目介绍
 >   品优购网上商城是一个综合性的 B2B2C 平台，类似京东商城、天猫商城。
@@ -23,5 +19,45 @@
 ![系统架构](\pig\品优购系统架构.png)
 
 
+###课程安排
+#####day01
+    导读
+    -   目标1：了解电商行业特点以及理解电商的模式
+    -   目标2：了解整体品优购的架构特点
+    -   目标3：能够运用Dubbox+SSM搭建分布式应用
+    -   目标4：搭建工程框架，完成品牌列表后端代码
+#####day02
+    目标1：运用AngularJS前端框架的常用指令
+    目标2：完成品牌管理的列表功能
+    目标3：完成品牌管理的分页列表功能
+    目标4：完成品牌管理的增加功能
+    目标5：完成品牌管理的修改功能
+    目标6：完成品牌管理的删除功能
+    目标7：完成品牌管理的条件查询功能
+#####day03
+    目标1：理解和运用angularJS的service
+    目标2：理解和运用控制器继承
+    目标3：掌握代码生成器的使用
+    目标4：实现规格管理
+    目标5：实现模板管理
+#####day04
+    目标1：实现SpringSecurity入门小Demo
+    目标2：完成运营商登陆与安全控制功能
+    目标3：完成商家入驻
+    目标4：完成商家审核
+    目标5：完成商家系统登陆与安全控制功能
+#####day05
+    目标1：完成商品分类功能
+遇到的问题：
+新增分类的时候，需要实现模板的下拉，使用的select标签，
+<select  ng-model="entity.typeId" ng-options="x.id as x.text for x in typeTemplateList">
+</select>  首先是单选的  然后查询的是数组对象
+>        [ {"id":1,"text":"联想"}, {"id":2,"text":"华为"},]
+，ng-options ：  in 后面 表示数据来源 x表示数组中每个元素 x.id表示选择后的值 x.text表示选项展示的值  
+      
+    目标2：了解电商概念SPU 和SKU
+    目标3：掌握富文本编辑器的使用
+    目标4：掌握上传服务器FastDFS 
+    目标5：掌握angularJS图片上传
 ### 本项目GIthub地址：[https://github.com/SZMOFEI/pinyougoumall.git](https://github.com/SZMOFEI/pinyougoumall.git)
 ### 本项目码云地址：[https://gitee.com/mohaoyang/pinyougoumall.git](https://github.com/SZMOFEI/pinyougoumall.git)

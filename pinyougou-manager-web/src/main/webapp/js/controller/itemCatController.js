@@ -1,5 +1,5 @@
  //控制层 
-app.controller('itemCatController' ,function($scope,$controller   ,itemCatService){	
+app.controller('itemCatController' ,function($scope,$controller   ,itemCatService,typeTemplateService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -10,7 +10,21 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 				$scope.list=response;
 			}			
 		);
-	}    
+	}
+    $scope.sites = [
+        {id : "Google", name : "http://www.google.com"},
+        {id : "Runoob", name : "http://www.runoob.com"},
+        {id : "Taobao", name : "http://www.taobao.com"}
+    ];
+
+    $scope.typeTemplateList=[];//品牌列表   /* //读取列表数据绑定到表单中
+	$scope.findTypeTemplateList=function(){
+        typeTemplateService.selectOptionList().success(
+			function(response){
+				$scope.typeTemplateList=response;
+			}
+		);
+	}
 	
 	//分页
 	$scope.findPage=function(page,rows){			
@@ -30,20 +44,56 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 			}
 		);				
 	}
-	
+	//定义新增分类
+	$scope.parentId=0;
+	//影响级别变量
+	$scope.grade=1;
+	$scope.setGrade=function (value) {
+		$scope.grade=value;
+    }
+
+    $scope.selectList=function (p_entity) {
+		if ($scope.grade==1){
+			$scope.entity_1=null;
+			$scope.entity_2=null;
+		}
+        if ($scope.grade==2){
+            $scope.entity_1=p_entity;
+            $scope.entity_2=null;
+        }
+        if ($scope.grade==3){
+            $scope.entity_2=p_entity;
+        }
+
+        $scope.findByParentId(p_entity.id);
+    }
+
+	//根据ID查询列表
+	$scope.findByParentId=function(parentId){
+		//记录此父ID,新增的时候用到
+		$scope.parentId=parentId;
+		itemCatService.findByParentId(parentId).success(
+			function(response){
+				$scope.list= response;
+			}
+		);
+	}
+
 	//保存 
 	$scope.save=function(){				
 		var serviceObject;//服务层对象  				
 		if($scope.entity.id!=null){//如果有ID
 			serviceObject=itemCatService.update( $scope.entity ); //修改  
 		}else{
+			$scope.entity.parentId=$scope.parentId;
+			alert("类型的ID是"+$scope.entity.typeId);
 			serviceObject=itemCatService.add( $scope.entity  );//增加 
 		}				
 		serviceObject.success(
 			function(response){
 				if(response.success){
 					//重新查询 
-		        	$scope.reloadList();//重新加载
+                    $scope.findByParentId($scope.parentId);//重新加载
 				}else{
 					alert(response.message);
 				}

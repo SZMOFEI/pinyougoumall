@@ -11,6 +11,7 @@ import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 服务实现层
@@ -29,6 +30,11 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 	@Override
 	public List<TypeTemplate> findAll() {
 		return typeTemplateMapper.selectByExample(null);
+	}
+
+	@Override
+	public List<Map> selectOptionList() {
+			return typeTemplateMapper.selectOptionList();
 	}
 
 	/**

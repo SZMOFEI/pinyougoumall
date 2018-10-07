@@ -10,7 +10,7 @@ app.controller('typeTemplateController' ,function($scope,$controller,typeTemplat
 				$scope.list=response;
 			}			
 		);
-	}    
+	}
 	
 	//分页
 	$scope.findPage=function(page,rows){			

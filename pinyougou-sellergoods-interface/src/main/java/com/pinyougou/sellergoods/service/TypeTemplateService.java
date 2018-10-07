@@ -4,6 +4,8 @@ import com.pinyougou.pojo.TypeTemplate;
 import entity.PageResult;
 
 import java.util.List;
+import java.util.Map;
+
 /**
  * 服务层接口
  * @author Administrator
@@ -13,28 +15,32 @@ public interface TypeTemplateService {
 
 	/**
 	 * 返回全部列表
-	 * @return
+	 * @return List<TypeTemplate>
 	 */
 	public List<TypeTemplate> findAll();
-	
+	/**
+	 * 下拉
+	 * @return List<Map>
+	 */
+	List<Map> selectOptionList ();
 	
 	/**
 	 * 返回分页列表
-	 * @return
+	 * @return PageResult
 	 */
-	public PageResult findPage(int pageNum, int pageSize);
+	 PageResult findPage(int pageNum, int pageSize);
 	
 	
 	/**
 	 * 增加
 	*/
-	public void add(TypeTemplate typeTemplate);
+	 void add(TypeTemplate typeTemplate);
 	
 	
 	/**
 	 * 修改
 	 */
-	public void update(TypeTemplate typeTemplate);
+	 void update(TypeTemplate typeTemplate);
 	
 
 	/**
@@ -42,7 +48,7 @@ public interface TypeTemplateService {
 	 * @param id
 	 * @return
 	 */
-	public TypeTemplate findOne(Long id);
+	 TypeTemplate findOne(Long id);
 	
 	
 	/**

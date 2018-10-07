@@ -1,5 +1,6 @@
 package com.pinyougou.manager.controller;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,6 +83,15 @@ public class ItemCatController {
 	public ItemCat findOne(Long id){
 		return itemCatService.findOne(id);		
 	}
+	/**
+	 * 根据父级ID查找列表
+	 * @param parentId 父ID
+	 * @return List<ItemCat>
+	 */
+	@RequestMapping("/findByParentId")
+	public List<ItemCat> findByParentId(Long parentId){
+		return itemCatService.findByParentId(parentId);
+	}
 	
 	/**
 	 * 批量删除
@@ -110,5 +120,7 @@ public class ItemCatController {
 	public PageResult search(@RequestBody ItemCat itemCat, int page, int rows  ){
 		return itemCatService.findPage(itemCat, page, rows);		
 	}
+
+
 	
 }

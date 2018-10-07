@@ -94,7 +94,7 @@ public class BrandController {
     }
 
     /**
-     *
+     *下拉
      */
     @RequestMapping("/selectOptionList")
     public List<Map> selectOptionList () {
