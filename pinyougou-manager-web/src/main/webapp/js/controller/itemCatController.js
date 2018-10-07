@@ -11,17 +11,13 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 			}			
 		);
 	}
-    $scope.sites = [
-        {id : "Google", name : "http://www.google.com"},
-        {id : "Runoob", name : "http://www.runoob.com"},
-        {id : "Taobao", name : "http://www.taobao.com"}
-    ];
 
-    $scope.typeTemplateList=[];//品牌列表   /* //读取列表数据绑定到表单中
+    $scope.typeTemplateList=[{id:0,text:'--请选择--'}];//品牌列表   /* //读取列表数据绑定到表单中
 	$scope.findTypeTemplateList=function(){
         typeTemplateService.selectOptionList().success(
 			function(response){
 				$scope.typeTemplateList=response;
+                $scope.myselect = $scope.typeTemplateList[0];
 			}
 		);
 	}
@@ -86,8 +82,7 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 			serviceObject=itemCatService.update( $scope.entity ); //修改  
 		}else{
 			$scope.entity.parentId=$scope.parentId;
-			alert("类型的ID是"+$scope.entity.typeId);
-			serviceObject=itemCatService.add( $scope.entity  );//增加 
+			serviceObject=itemCatService.add( $scope.entity  );//增加
 		}				
 		serviceObject.success(
 			function(response){
@@ -108,9 +103,11 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		itemCatService.dele( $scope.selectIds ).success(
 			function(response){
 				if(response.success){
-					$scope.reloadList();//刷新列表
+                    $scope.findByParentId($scope.parentId);//重新加载
 					$scope.selectIds=[];
-				}						
+				}else {
+					alert(response.message);
+				}
 			}		
 		);				
 	}
