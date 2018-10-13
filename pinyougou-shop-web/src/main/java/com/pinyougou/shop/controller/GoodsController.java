@@ -61,22 +61,7 @@ public class GoodsController {
 			return new Result(false, "增加失败");
 		}
 	}
-/*	*//**
-	 * 增加
-	 * @param goods
-	 * @return
-	 *//*
-	@RequestMapping("/add")
-	public Result add(@RequestBody Goods goods){
-		try {
-			goodsService.add(goods);
-			return new Result(true, "增加成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Result(false, "增加失败");
-		}
-	}*/
-	
+
 	/**
 	 * 修改
 	 * @param goods
