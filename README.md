@@ -59,5 +59,13 @@
     目标3：掌握富文本编辑器的使用
     目标4：掌握上传服务器FastDFS 
     目标5：掌握angularJS图片上传
+#####day06
+    目标1：完成选择商品分类功能
+    目标2：完成品牌选择功能
+    目标3：完成扩展属性功能
+    目标4：完成规格选择功能
+    目标5：完成SKU商品信息功能
+    目标6：完成是否启用规格功能
+    
 ### 本项目GIthub地址：[https://github.com/SZMOFEI/pinyougoumall.git](https://github.com/SZMOFEI/pinyougoumall.git)
 ### 本项目码云地址：[https://gitee.com/mohaoyang/pinyougoumall.git](https://github.com/SZMOFEI/pinyougoumall.git)
