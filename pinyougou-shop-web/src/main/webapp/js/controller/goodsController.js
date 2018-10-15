@@ -148,6 +148,8 @@ app.controller('goodsController', function ($scope, $controller, goodsService,up
                 $scope.typeTemplate=response;
                 //品牌列表
                 $scope.typeTemplate.brandIds=JSON.parse($scope.typeTemplate.brandIds);
+                //给扩展属性赋值
+                $scope.entity.goodsDesc.customAttributeItems=JSON.parse($scope.typeTemplate.customAttributeItems);
             }
         )
     })
