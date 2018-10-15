@@ -131,4 +131,13 @@ app.controller('goodsController', function ($scope, $controller, goodsService,up
             }
         )
     })
+    //读取三级分类
+    $scope.$watch('entity.goods.category3Id',function (newValue, oldValue) {
+        //根据选择的值选择级分类
+        itemCatService.findOne(newValue).success(
+            function (response) {
+                $scope.entity.goods.typeTemplateId=response.typeId;
+            }
+        )
+    })
 });
