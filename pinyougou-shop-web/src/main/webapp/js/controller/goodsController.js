@@ -1,5 +1,5 @@
 //控制层
-app.controller('goodsController', function ($scope, $controller, goodsService,uploadService,itemCatService) {
+app.controller('goodsController', function ($scope, $controller, goodsService,uploadService,itemCatService,typeTemplateService) {
 
     $controller('baseController', {$scope: $scope});//继承
 
@@ -131,7 +131,7 @@ app.controller('goodsController', function ($scope, $controller, goodsService,up
             }
         )
     })
-    //读取三级分类
+    //更新模板
     $scope.$watch('entity.goods.category3Id',function (newValue, oldValue) {
         //根据选择的值选择级分类
         itemCatService.findOne(newValue).success(
@@ -140,4 +140,16 @@ app.controller('goodsController', function ($scope, $controller, goodsService,up
             }
         )
     })
+    //读取品牌列表
+    $scope.$watch('entity.goods.typeTemplateId',function (newValue, oldValue) {
+        //根据选择的值选择级分类
+        typeTemplateService.findOne(newValue).success(
+            function (response) {
+                $scope.typeTemplate=response;
+                //品牌列表
+                $scope.typeTemplate.brandIds=JSON.parse($scope.typeTemplate.brandIds);
+            }
+        )
+    })
+
 });
