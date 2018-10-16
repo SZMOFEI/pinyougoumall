@@ -118,5 +118,15 @@ public class TypeTemplateController {
 	public PageResult search(@RequestBody TypeTemplate typeTemplate, int page, int rows  ){
 		return typeTemplateService.findPage(typeTemplate, page, rows);		
 	}
+
+	/**
+	 * 查询规格列表，包含选项
+	 * @param id
+	 * @return List<M>
+	 */
+	@RequestMapping("/findSpecList")
+	public List<Map> findSpecList(Long id ){
+		return typeTemplateService.findSpecificationOptionList(id);
+	}
 	
 }

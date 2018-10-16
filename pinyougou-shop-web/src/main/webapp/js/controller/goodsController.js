@@ -152,6 +152,14 @@ app.controller('goodsController', function ($scope, $controller, goodsService,up
                 $scope.entity.goodsDesc.customAttributeItems=JSON.parse($scope.typeTemplate.customAttributeItems);
             }
         )
+        //查询规格列表
+        typeTemplateService.findSpecList(newValue).success(
+            function (response) {
+                $scope.specList = response;
+            }
+        )
     })
+
+
 
 });
