@@ -75,31 +75,54 @@ public class GoodsServiceImpl implements GoodsService {
 		dto.getGoodsDesc().setGoodsId(dto.getGoods().getId());
 		goodsDescMapper.insert(dto.getGoodsDesc());
 
+		if ("1".equals(dto.getGoods().getIsEnableSpec())){
 		List<Item> itemList = dto.getItemList();
-		for (Item item : itemList) {
-			String title = dto.getGoods().getGoodsName();
-			//将一个字符串转成一个map
-			Map<String,Object> specMap = JSON.parseObject(item.getSpec());
-			for (String key : specMap.keySet()) {
-				title+=" "+specMap.get(key);
+			for (Item item : itemList) {
+				String title = dto.getGoods().getGoodsName();
+				//将一个字符串转成一个map
+				Map<String,Object> specMap = JSON.parseObject(item.getSpec());
+				for (String key : specMap.keySet()) {
+					title+=" "+specMap.get(key);
+				}
+				item.setTitle(title);
+				setItemValue(dto,item);
+				itemMapper.insert(item);
 			}
-			item.setTitle(title);
-			//商品spu编号
-			item.setGoodsId(dto.getGoods().getId());
-			item.setSellerId(dto.getGoods().getSellerId());
-			item.setCategoryid(dto.getGoods().getCategory3Id());
-			item.setCreateTime(new Date());
-			item.setUpdateTime(new Date());
-			//品牌名称
-			Brand brand = brandMapper.selectByPrimaryKey(dto.getGoods().getBrandId());
-			item.setBrand(brand.getName());
-			//分类名称
-			ItemCat itemCat = itemCatMapper.selectByPrimaryKey(dto.getGoods().getCategory3Id());
-			item.setCategory(itemCat.getName());
-			//商家名称
-			Seller seller = sellerMapper.selectByPrimaryKey(dto.getGoods().getSellerId());
-			item.setSeller(seller.getNickName());
+		}else {
+			Item item = new Item();
+			item.setTitle(dto.getGoods().getGoodsName());//商品KPU+规格描述串作为SKU名称
+			item.setPrice( dto.getGoods().getPrice() );//价格
+			item.setStatus("1");//状态
+			item.setIsDefault("1");//是否默认
+			item.setNum(99999);//库存数量
+			item.setSpec("{}");
+			setItemValue(dto,item);
+			itemMapper.insert(item);
 		}
+
+	}
+
+	private void setItemValue(GoodsDTO dto, Item item) {
+		//商品spu编号
+		item.setGoodsId(dto.getGoods().getId());
+		item.setSellerId(dto.getGoods().getSellerId());
+		item.setCategoryid(dto.getGoods().getCategory3Id());
+		item.setCreateTime(new Date());
+		item.setUpdateTime(new Date());
+		//品牌名称
+		Brand brand = brandMapper.selectByPrimaryKey(dto.getGoods().getBrandId());
+		item.setBrand(brand.getName());
+		//分类名称
+		ItemCat itemCat = itemCatMapper.selectByPrimaryKey(dto.getGoods().getCategory3Id());
+		item.setCategory(itemCat.getName());
+		//商家名称
+		Seller seller = sellerMapper.selectByPrimaryKey(dto.getGoods().getSellerId());
+		item.setSeller(seller.getNickName());
+		//图片地址
+		List<Map> images = JSON.parseArray(dto.getGoodsDesc().getItemImages(),Map.class);
+		if (images.size()>0){
+            item.setImage((String) images.get(0).get("url"));
+        }
 	}
 
 
