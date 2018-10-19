@@ -1,5 +1,5 @@
 //控制层
-app.controller('goodsController', function ($scope, $controller, goodsService,uploadService,itemCatService,typeTemplateService) {
+app.controller('goodsController', function ($scope, $controller, goodsService, uploadService, itemCatService, typeTemplateService) {
 
     $controller('baseController', {$scope: $scope});//继承
 
@@ -33,7 +33,7 @@ app.controller('goodsController', function ($scope, $controller, goodsService,up
 
     //保存
     $scope.add = function () {
-        alert("controller" );
+        alert("controller");
         $scope.entity.goodsDesc.introduction = editor.html();
         goodsService.add($scope.entity).success(
             function (response) {
@@ -78,78 +78,78 @@ app.controller('goodsController', function ($scope, $controller, goodsService,up
     /**
      * 上传图片
      */
-    $scope.uploadFile=function(){
-        uploadService.uploadFile().success(function(response) {
-            if(response.success){//如果上传成功，取出url
-                $scope.image_entity.url=response.message;//设置文件地址
-            }else{
+    $scope.uploadFile = function () {
+        uploadService.uploadFile().success(function (response) {
+            if (response.success) {//如果上传成功，取出url
+                $scope.image_entity.url = response.message;//设置文件地址
+            } else {
                 alert(response.message);
             }
-        }).error(function() {
+        }).error(function () {
             alert("上传发生错误");
         });
     };
 
-    $scope.entity={goods:{},goodsDesc:{itemImages:[]}};//定义页面实体结构
+    $scope.entity = {goodsDesc: {itemImages: [], specificationItems: []}};//定义页面实体结构
     //图片列表
-    $scope.add_image_entity=function () {
+    $scope.add_image_entity = function () {
         $scope.entity.goodsDesc.itemImages.push($scope.image_entity);
     }
     /**
      * 移除图片
      */
-    $scope.remove_image_entity=function (index) {
-        $scope.entity.goodsDesc.itemImages.splice(index,1);
+    $scope.remove_image_entity = function (index) {
+        $scope.entity.goodsDesc.itemImages.splice(index, 1);
     }
 
     /**
      *读取一级分类
      */
-    $scope.selectItemCat1List=function () {
+    $scope.selectItemCat1List = function () {
         itemCatService.findByParentId(0).success(
             function (response) {
-                $scope.itemCat1List=response;
+                $scope.itemCat1List = response;
             }
         )
     }
 
     //读取二级分类
-    $scope.$watch('entity.goods.category1Id',function (newValue, oldValue) {
+    $scope.$watch('entity.goods.category1Id', function (newValue, oldValue) {
         //根据选择的值选择二级分类
         itemCatService.findByParentId(newValue).success(
             function (response) {
-                $scope.itemCat2List=response;
+                $scope.itemCat2List = response;
             }
         )
     })
     //读取三级分类
-    $scope.$watch('entity.goods.category2Id',function (newValue, oldValue) {
+    $scope.$watch('entity.goods.category2Id', function (newValue, oldValue) {
         //根据选择的值选择级分类
         itemCatService.findByParentId(newValue).success(
             function (response) {
-                $scope.itemCat3List=response;
+                $scope.itemCat3List = response;
             }
         )
     })
     //更新模板
-    $scope.$watch('entity.goods.category3Id',function (newValue, oldValue) {
+    $scope.$watch('entity.goods.category3Id', function (newValue, oldValue) {
         //根据选择的值选择级分类
         itemCatService.findOne(newValue).success(
             function (response) {
-                $scope.entity.goods.typeTemplateId=response.typeId;
+                $scope.entity.goods.typeTemplateId = response.typeId;
             }
         )
     })
     //读取品牌列表
-    $scope.$watch('entity.goods.typeTemplateId',function (newValue, oldValue) {
+    $scope.$watch('entity.goods.typeTemplateId', function (newValue, oldValue) {
         //根据选择的值选择级分类
         typeTemplateService.findOne(newValue).success(
             function (response) {
-                $scope.typeTemplate=response;
+                $scope.typeTemplate = response;
                 //品牌列表
-                $scope.typeTemplate.brandIds=JSON.parse($scope.typeTemplate.brandIds);
+                $scope.typeTemplate.brandIds = JSON.parse($scope.typeTemplate.brandIds);
                 //给扩展属性赋值
-                $scope.entity.goodsDesc.customAttributeItems=JSON.parse($scope.typeTemplate.customAttributeItems);
+                $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.typeTemplate.customAttributeItems);
             }
         )
         //查询规格列表
@@ -160,6 +160,55 @@ app.controller('goodsController', function ($scope, $controller, goodsService,up
         )
     })
 
+    $scope.updateSpecAttribute = function ($event, name, value) {
+        var objectByKey = $scope.searchObjectByKey($scope.entity.goodsDesc.specificationItems, "attributeName", name);
+        if (objectByKey != null) {
+            //1.选中
+            if ($event.target.checked) {
+                objectByKey.attributeValue.push(value);
+            } else {
+                //2.未选中
+                objectByKey.attributeValue.splice(objectByKey.attributeValue.indexOf(value), 1);
+                if (objectByKey.attributeValue.length == 0) {
+                    $scope.entity.goodsDesc.specificationItems.splice($scope.entity.goodsDesc.specificationItems.indexOf(objectByKey), 1);
+                }
+            }
+        } else {
+            $scope.entity.goodsDesc.specificationItems.push(
+                {
+                    "attributeName": name,
+                    "attributeValue": [value]
+                }
+            );
+        }
+    }
 
+    //创建SKU列表
+    $scope.createItemList = function () {
+        $scope.entity.itemList = [{
+            spec: {},
+            price: 0,
+            num: 99999,
+            status: '0',
+            isDefault: '0'
+        }];//初始
+        var items = $scope.entity.goodsDesc.specificationItems;
+        for (var i = 0; i < items.length; i++) {
+            $scope.entity.itemList = this.addColumn($scope.entity.itemList, items[i].attributeName, items[i].attributeValue);
+        }
+    }
+    //添加列值
+    $scope.addColumn = function (list, columnName, conlumnValues) {
+        var newList = [];//新的集合
+        for (var i = 0; i < list.length; i++) {
+            var oldRow = list[i];
+            for (var j = 0; j < conlumnValues.length; j++) {
+                var newRow = JSON.parse(JSON.stringify(oldRow));//深克隆
+                newRow.spec[columnName] = conlumnValues[j];
+                newList.push(newRow);
+            }
+        }
+        return newList;
+    }
 
 });

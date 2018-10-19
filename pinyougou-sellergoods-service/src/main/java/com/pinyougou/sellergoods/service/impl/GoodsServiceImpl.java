@@ -1,19 +1,20 @@
 package com.pinyougou.sellergoods.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.pinyougou.mapper.GoodsDescMapper;
-import com.pinyougou.mapper.GoodsMapper;
-import com.pinyougou.pojo.Goods;
-import com.pinyougou.pojo.GoodsExample;
+import com.pinyougou.mapper.*;
+import com.pinyougou.pojo.*;
 import com.pinyougou.pojo.GoodsExample.Criteria;
 import com.pinyougou.pojogroup.GoodsDTO;
 import com.pinyougou.sellergoods.service.GoodsService;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 服务实现层
@@ -27,6 +28,14 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsMapper goodsMapper;
 	@Autowired
 	private GoodsDescMapper goodsDescMapper;
+	@Autowired
+	private ItemMapper itemMapper;
+	@Autowired
+	private BrandMapper brandMapper;
+	@Autowired
+	private ItemCatMapper itemCatMapper;
+	@Autowired
+	private SellerMapper sellerMapper;
 
 	/**
 	 * 查询全部
@@ -65,6 +74,32 @@ public class GoodsServiceImpl implements GoodsService {
 		goodsMapper.insert(dto.getGoods());
 		dto.getGoodsDesc().setGoodsId(dto.getGoods().getId());
 		goodsDescMapper.insert(dto.getGoodsDesc());
+
+		List<Item> itemList = dto.getItemList();
+		for (Item item : itemList) {
+			String title = dto.getGoods().getGoodsName();
+			//将一个字符串转成一个map
+			Map<String,Object> specMap = JSON.parseObject(item.getSpec());
+			for (String key : specMap.keySet()) {
+				title+=" "+specMap.get(key);
+			}
+			item.setTitle(title);
+			//商品spu编号
+			item.setGoodsId(dto.getGoods().getId());
+			item.setSellerId(dto.getGoods().getSellerId());
+			item.setCategoryid(dto.getGoods().getCategory3Id());
+			item.setCreateTime(new Date());
+			item.setUpdateTime(new Date());
+			//品牌名称
+			Brand brand = brandMapper.selectByPrimaryKey(dto.getGoods().getBrandId());
+			item.setBrand(brand.getName());
+			//分类名称
+			ItemCat itemCat = itemCatMapper.selectByPrimaryKey(dto.getGoods().getCategory3Id());
+			item.setCategory(itemCat.getName());
+			//商家名称
+			Seller seller = sellerMapper.selectByPrimaryKey(dto.getGoods().getSellerId());
+			item.setSeller(seller.getNickName());
+		}
 	}
 
 
