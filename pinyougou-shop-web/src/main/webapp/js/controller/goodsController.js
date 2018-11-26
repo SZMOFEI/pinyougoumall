@@ -32,20 +32,22 @@ app.controller('goodsController', function ($scope, $controller, goodsService, u
     }
 
     //保存
-    $scope.add = function () {
+    $scope.save = function () {
         $scope.entity.goodsDesc.introduction=editor.html();
-        goodsService.add($scope.entity).success(
-            function (response) {
-                if (response.success) {
-                    alert('保存成功');
-                    $scope.entity = {};
-                    //清空富文本编辑器
-                    editor.html("");
-                } else {
-                    alert(response.message);
-                }
+        var serverObject;
+        if($scope.entity.goods.id!=null){
+            serverObject=goodsService.update($scope.entity);
+        }else {
+            serverObjec= goodsService.add($scope.entity);
+        }
+        serverObjec.success(function (response) {
+            if (response.success) {
+                alert('保存成功');
+                location.href='goods.html';
+            } else {
+                alert(response.message);
             }
-        );
+        })
     }
 
 
