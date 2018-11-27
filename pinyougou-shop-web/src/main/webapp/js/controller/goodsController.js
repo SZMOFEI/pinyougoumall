@@ -161,7 +161,7 @@ app.controller('goodsController', function ($scope, $controller, goodsService, u
             }
         )
     })
-
+    //更新规格属性
     $scope.updateSpecAttribute = function ($event, name, value) {
         var objectByKey = $scope.searchObjectByKey($scope.entity.goodsDesc.specificationItems, "attributeName", name);
         if (objectByKey != null) {
@@ -213,4 +213,17 @@ app.controller('goodsController', function ($scope, $controller, goodsService, u
         return newList;
     }
 
+    //查询商品分类
+    $scope.itemCatList=[];
+    $scope.findItemCatList=function () {
+        itemCatService.findAll().success(
+            function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    $scope.itemCatList[response[i].id]=response[i].name;
+                }
+            }
+        )
+    }
+
+    $scope.status=['未审核','已审核','审核未通过','关闭'];//商品状态
 });
