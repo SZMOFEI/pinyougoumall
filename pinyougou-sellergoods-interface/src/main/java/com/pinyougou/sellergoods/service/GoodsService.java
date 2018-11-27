@@ -47,7 +47,7 @@ public interface GoodsService {
 	 * @param id
 	 * @return
 	 */
-	public Goods findOne(Long id);
+	 public GoodsDTO findOne(Long id);
 	
 	
 	/**

@@ -149,8 +149,20 @@ public class GoodsServiceImpl implements GoodsService {
      * @return
      */
     @Override
-    public Goods findOne(Long id) {
-        return goodsMapper.selectByPrimaryKey(id);
+    public GoodsDTO findOne(Long id) {
+        GoodsDTO dto = new GoodsDTO();
+        Goods goods = goodsMapper.selectByPrimaryKey(id);
+        dto.setGoods(goods);
+        GoodsDesc goodsDesc = goodsDescMapper.selectByPrimaryKey(id);
+        dto.setGoodsDesc(goodsDesc);
+
+        //查找规格选项
+        ItemExample example = new ItemExample();
+        ItemExample.Criteria criteria = example.createCriteria();
+        criteria.andGoodsIdEqualTo(goods.getId());
+        List<Item> items = itemMapper.selectByExample(example);
+        dto.setItemList(items);
+        return dto;
     }
 
     /**
