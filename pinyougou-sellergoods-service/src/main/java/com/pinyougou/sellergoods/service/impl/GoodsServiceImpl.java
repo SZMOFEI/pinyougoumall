@@ -78,6 +78,11 @@ public class GoodsServiceImpl implements GoodsService {
         dto.getGoodsDesc().setGoodsId(dto.getGoods().getId());
         goodsDescMapper.insert(dto.getGoodsDesc());
 
+        saveItemList(dto);
+
+    }
+
+    private void saveItemList(GoodsDTO dto) {
         if ("1".equals(dto.getGoods().getIsEnableSpec())) {
             List<Item> itemList = dto.getItemList();
             for (Item item : itemList) {
@@ -107,7 +112,6 @@ public class GoodsServiceImpl implements GoodsService {
             setItemValue(dto, item);
             itemMapper.insert(item);
         }
-
     }
 
     private void setItemValue(GoodsDTO dto, Item item) {
@@ -138,8 +142,19 @@ public class GoodsServiceImpl implements GoodsService {
      * 修改
      */
     @Override
-    public void update(Goods goods) {
-        goodsMapper.updateByPrimaryKey(goods);
+    public void update(GoodsDTO dto) {
+        //设置为申请状态
+        dto.getGoods().setAuditStatus("0");
+        goodsMapper.updateByPrimaryKey(dto.getGoods());
+        goodsDescMapper.updateByPrimaryKey(dto.getGoodsDesc());
+
+        //删除原来的sku
+        ItemExample example =new ItemExample();
+        ItemExample.Criteria criteria = example.createCriteria();
+        criteria.andGoodsIdEqualTo(dto.getGoods().getId());
+        itemMapper.deleteByExample(example);
+        saveItemList(dto);
+
     }
 
     /**

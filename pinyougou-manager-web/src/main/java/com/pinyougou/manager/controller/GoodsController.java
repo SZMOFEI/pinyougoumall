@@ -2,6 +2,7 @@ package com.pinyougou.manager.controller;
 import java.util.List;
 
 import com.pinyougou.pojogroup.GoodsDTO;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,13 +61,20 @@ public class GoodsController {
 	
 	/**
 	 * 修改
-	 * @param goods
+	 * @param dto
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody Goods goods){
+	public Result update(@RequestBody GoodsDTO dto){
+		//校验是否当前的商户ID才能修改
+		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+		GoodsDTO old = goodsService.findOne(dto.getGoods().getId());
+		if (!old.getGoods().getSellerId().equals(sellerId) ||
+				!dto.getGoods().getSellerId().equals(sellerId)) {
+			return new Result(false, "操作非法");
+		}
 		try {
-			goodsService.update(goods);
+			goodsService.update(dto);
 			return new Result(true, "修改成功");
 		} catch (Exception e) {
 			e.printStackTrace();

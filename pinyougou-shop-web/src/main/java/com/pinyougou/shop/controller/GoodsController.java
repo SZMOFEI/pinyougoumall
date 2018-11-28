@@ -64,13 +64,13 @@ public class GoodsController {
 
 	/**
 	 * 修改
-	 * @param goods
+	 * @param dto
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody Goods goods){
+	public Result update(@RequestBody GoodsDTO dto){
 		try {
-			goodsService.update(goods);
+			goodsService.update(dto);
 			return new Result(true, "修改成功");
 		} catch (Exception e) {
 			e.printStackTrace();

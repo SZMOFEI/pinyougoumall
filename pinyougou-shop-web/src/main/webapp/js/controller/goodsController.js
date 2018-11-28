@@ -26,14 +26,15 @@ app.controller('goodsController', function ($scope, $controller, goodsService, u
 
     //保存
     $scope.save = function () {
+        //提取富文本中的值
         $scope.entity.goodsDesc.introduction = editor.html();
         var serverObject;
         if ($scope.entity.goods.id != null) {
             serverObject = goodsService.update($scope.entity);
         } else {
-            serverObjec = goodsService.add($scope.entity);
+            serverObject = goodsService.add($scope.entity);
         }
-        serverObjec.success(function (response) {
+        serverObject.success(function (response) {
             if (response.success) {
                 alert('保存成功');
                 location.href = 'goods.html';

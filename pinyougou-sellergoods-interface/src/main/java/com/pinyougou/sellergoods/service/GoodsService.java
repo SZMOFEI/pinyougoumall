@@ -39,7 +39,7 @@ public interface GoodsService {
 	/**
 	 * 修改
 	 */
-	public void update(Goods goods);
+	public void update(GoodsDTO goods);
 	
 
 	/**
