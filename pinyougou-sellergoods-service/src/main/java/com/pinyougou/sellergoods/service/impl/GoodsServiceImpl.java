@@ -13,6 +13,7 @@ import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -185,8 +186,22 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public void delete(Long[] ids) {
+        GoodsExample example = new GoodsExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andIdIn(Arrays.asList(ids));
+        List<Goods> goods = goodsMapper.selectByExample(example);
+        for (Goods good : goods) {
+            good.setIsDelete("1");
+            goodsMapper.updateByPrimaryKey(good);
+        }
+    }
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
         for (Long id : ids) {
-            goodsMapper.deleteByPrimaryKey(id);
+            Goods goods = goodsMapper.selectByPrimaryKey(id);
+            goods.setAuditStatus(status);
+            goodsMapper.updateByPrimaryKey(goods);
         }
     }
 
@@ -223,7 +238,7 @@ public class GoodsServiceImpl implements GoodsService {
             if (goods.getIsDelete() != null && goods.getIsDelete().length() > 0) {
                 criteria.andIsDeleteLike("%" + goods.getIsDelete() + "%");
             }
-
+            criteria.andIsDeleteIsNull();//非删除状态
         }
 
         Page<Goods> page = (Page<Goods>) goodsMapper.selectByExample(example);

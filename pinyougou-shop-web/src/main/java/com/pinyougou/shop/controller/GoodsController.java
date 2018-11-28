@@ -103,6 +103,22 @@ public class GoodsController {
 			return new Result(false, "删除失败");
 		}
 	}
+
+	/**
+	 * 批量更新状态
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping("/updateStatus")
+	public Result updateStatus(Long [] ids,String status){
+		try {
+			goodsService.updateStatus(ids,status);
+			return new Result(true, "更新成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "更新失败");
+		}
+	}
 	
 		/**
 	 * 查询+分页

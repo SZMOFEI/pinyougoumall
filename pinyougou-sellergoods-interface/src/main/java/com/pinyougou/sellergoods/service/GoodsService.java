@@ -55,6 +55,11 @@ public interface GoodsService {
 	 * @param ids
 	 */
 	public void delete(Long[] ids);
+	/**
+	 * 批量更新状态
+	 * @param ids
+	 */
+	public void updateStatus(Long[] ids,String status);
 
 	/**
 	 * 分页
