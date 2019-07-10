@@ -5,6 +5,7 @@ import com.pinyougou.pojo.BrandExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BrandMapper {
     int countByExample(BrandExample example);
@@ -28,4 +29,6 @@ public interface BrandMapper {
     int updateByPrimaryKeySelective(Brand record);
 
     int updateByPrimaryKey(Brand record);
+
+    List<Map> selectOptionList() ;
 }

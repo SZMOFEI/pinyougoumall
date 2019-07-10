@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author mofei
@@ -91,4 +92,13 @@ public class BrandController {
             return new Result(false, "删除失败");
         }
     }
+
+    /**
+     *下拉
+     */
+    @RequestMapping("/selectOptionList")
+    public List<Map> selectOptionList () {
+        return brandService.selectOptionList();
+    }
+
 }

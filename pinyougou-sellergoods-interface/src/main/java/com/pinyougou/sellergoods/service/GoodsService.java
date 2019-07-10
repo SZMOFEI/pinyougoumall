@@ -1,5 +1,6 @@
 package com.pinyougou.sellergoods.service;
 import com.pinyougou.pojo.Goods;
+import com.pinyougou.pojogroup.GoodsDTO;
 import entity.PageResult;
 
 import java.util.List;
@@ -28,12 +29,17 @@ public interface GoodsService {
 	 * 增加
 	*/
 	public void add(Goods goods);
+
+	/**
+	 * 增加商品
+	*/
+	public void add(GoodsDTO goods);
 	
 	
 	/**
 	 * 修改
 	 */
-	public void update(Goods goods);
+	public void update(GoodsDTO goods);
 	
 
 	/**
@@ -41,7 +47,7 @@ public interface GoodsService {
 	 * @param id
 	 * @return
 	 */
-	public Goods findOne(Long id);
+	 public GoodsDTO findOne(Long id);
 	
 	
 	/**
@@ -49,6 +55,11 @@ public interface GoodsService {
 	 * @param ids
 	 */
 	public void delete(Long[] ids);
+	/**
+	 * 批量更新状态
+	 * @param ids
+	 */
+	public void updateStatus(Long[] ids,String status);
 
 	/**
 	 * 分页

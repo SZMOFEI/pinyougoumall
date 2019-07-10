@@ -11,6 +11,13 @@ import java.util.List;
 public interface ItemCatService {
 
 	/**
+	 * 根据parentID查询列表
+	 * @return
+	 */
+	 List<ItemCat> findByParentId(Long parentId);
+
+
+	/**
 	 * 返回全部列表
 	 * @return
 	 */

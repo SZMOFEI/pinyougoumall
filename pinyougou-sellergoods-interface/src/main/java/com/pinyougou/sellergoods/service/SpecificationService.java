@@ -4,6 +4,8 @@ import com.pinyougou.pojogroup.SpecificationVo;
 import entity.PageResult;
 
 import java.util.List;
+import java.util.Map;
+
 /**
  * 服务层接口
  * @author Administrator
@@ -58,5 +60,10 @@ public interface SpecificationService {
 	 * @return
 	 */
 	public PageResult findPage(Specification specification, int pageNum, int pageSize);
-	
+
+	/**
+	 * 规格下拉
+	 * @return List<Map>
+	 */
+	List<Map> selectSpecificationList();
 }

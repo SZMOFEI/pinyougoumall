@@ -4,36 +4,65 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class Goods implements Serializable {
+    /**
+     * 编号
+     */
     private Long id;
-
+    /**
+     * 商家ID
+     */
     private String sellerId;
-
+    /**
+     * 商品名称
+     */
     private String goodsName;
-
+    /**
+     * 默认skuID
+     */
     private Long defaultItemId;
-
+    /**
+     * 审核状态
+     */
     private String auditStatus;
-
+    /**
+     * 是否上架
+     */
     private String isMarketable;
-
+    /**
+     * 品牌ID
+     */
     private Long brandId;
-
+    /**
+     *
+     */
     private String caption;
-
+    /**
+     * 一级分类ID
+     */
     private Long category1Id;
 
     private Long category2Id;
 
     private Long category3Id;
-
+    /**
+     * 小图标
+     */
     private String smallPic;
-
+    /**
+     * 价格
+     */
     private BigDecimal price;
-
+    /**
+     * 模板ID
+     */
     private Long typeTemplateId;
-
+    /**
+     * 是否启用规格
+     */
     private String isEnableSpec;
-
+    /**
+     * 是否删除
+     */
     private String isDelete;
 
     public Long getId() {

@@ -34,6 +34,11 @@ public interface SellerService {
 	 * 修改
 	 */
 	public void update(Seller seller);
+
+	/**
+	 * 修改
+	 */
+	void update(String sellerId,String status);
 	
 
 	/**
@@ -57,5 +62,6 @@ public interface SellerService {
 	 * @return
 	 */
 	public PageResult findPage(Seller seller, int pageNum, int pageSize);
-	
+
+
 }

@@ -9,7 +9,9 @@ import com.pinyougou.pojo.SellerExample.Criteria;
 import com.pinyougou.sellergoods.service.SellerService;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,6 +48,12 @@ public class SellerServiceImpl implements SellerService {
 	 */
 	@Override
 	public void add(Seller seller) {
+		//加密
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String password = passwordEncoder.encode(seller.getPassword());
+		seller.setPassword(password);
+		seller.setStatus("0");
+		seller.setCreateTime(new Date());
 		sellerMapper.insert(seller);		
 	}
 
@@ -56,8 +64,15 @@ public class SellerServiceImpl implements SellerService {
 	@Override
 	public void update(Seller seller){
 		sellerMapper.updateByPrimaryKey(seller);
-	}	
-	
+	}
+
+	@Override
+	public void update(String sellerId, String status) {
+		Seller seller = sellerMapper.selectByPrimaryKey(sellerId);
+		seller.setStatus(status);
+		sellerMapper.updateByPrimaryKey(seller);
+	}
+
 	/**
 	 * 根据ID获取实体
 	 * @param id

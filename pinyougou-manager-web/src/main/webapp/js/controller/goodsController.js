@@ -1,5 +1,5 @@
  //控制层 
-app.controller('goodsController' ,function($scope,$controller   ,goodsService){	
+app.controller('goodsController' ,function($scope,$controller ,itemCatService,goodsService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -23,12 +23,30 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService){
 	}
 	
 	//查询实体 
-	$scope.findOne=function(id){				
-		goodsService.findOne(id).success(
-			function(response){
-				$scope.entity= response;					
-			}
-		);				
+	$scope.findOne=function(id){
+        var id = $location.search()['id'];
+        if (id == null) {
+            return;
+        }
+        goodsService.findOne(id).success(
+            function (response) {
+                $scope.entity = response;
+                //向富文本编辑器添加商品介绍
+                editor.html($scope.entity.goodsDesc.introduction);
+                //显示图片列表
+                $scope.entity.goodsDesc.itemImages =
+                    JSON.parse($scope.entity.goodsDesc.itemImages);
+                //显示扩展属性
+                $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.entity.goodsDesc.customAttributeItems);
+                //规格选择
+                $scope.entity.goodsDesc.specificationItems= JSON.parse($scope.entity.goodsDesc.specificationItems);
+                //转换sku列表中的规格对象
+
+                for(var i=0;i< $scope.entity.itemList.length;i++ ){
+                    $scope.entity.itemList[i].spec=  JSON.parse($scope.entity.itemList[i].spec);
+                }
+            }
+        );
 	}
 	
 	//保存 
@@ -76,5 +94,36 @@ app.controller('goodsController' ,function($scope,$controller   ,goodsService){
 			}			
 		);
 	}
-    
+
+	$scope.test1=function () {
+		alert("为什d么调用这个");
+    }
+    //商品状态
+    $scope.status=['未审核','已审核','审核未通过','关闭'];
+    $scope.itemCatList = [];
+    //查询商品分类
+    $scope.findItemCatList=function(){
+        itemCatService.findAll().success(
+            function(response){
+                for(var i=0;i<response.length;i++){
+                    $scope.itemCatList[response[i].id ]=response[i].name;
+                }
+            }
+        );
+    }
+
+    //更新商品的状态
+	$scope.updateStatus =function (status) {
+		goodsService.updateStatus($scope.selectIds,status).success(
+			function (response) {
+				if (response.success){
+                    $scope.reloadList();//刷新列表
+                    $scope.selectIds=[];//清空ID集合
+
+                }else{
+                    alert(response.message);
+                }
+            }
+		)
+    }
 });	

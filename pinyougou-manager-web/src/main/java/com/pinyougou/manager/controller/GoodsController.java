@@ -1,6 +1,8 @@
 package com.pinyougou.manager.controller;
 import java.util.List;
 
+import com.pinyougou.pojogroup.GoodsDTO;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,16 +58,39 @@ public class GoodsController {
 			return new Result(false, "增加失败");
 		}
 	}
+
+	/**
+	 * 批量更新状态
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping("/updateStatus")
+	public Result updateStatus(Long [] ids,String status){
+		try {
+			goodsService.updateStatus(ids,status);
+			return new Result(true, "更新成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false, "更新失败");
+		}
+	}
 	
 	/**
 	 * 修改
-	 * @param goods
+	 * @param dto
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody Goods goods){
+	public Result update(@RequestBody GoodsDTO dto){
+		//校验是否当前的商户ID才能修改
+		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+		GoodsDTO old = goodsService.findOne(dto.getGoods().getId());
+		if (!old.getGoods().getSellerId().equals(sellerId) ||
+				!dto.getGoods().getSellerId().equals(sellerId)) {
+			return new Result(false, "操作非法");
+		}
 		try {
-			goodsService.update(goods);
+			goodsService.update(dto);
 			return new Result(true, "修改成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,7 +104,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/findOne")
-	public Goods findOne(Long id){
+	public GoodsDTO findOne(Long id){
 		return goodsService.findOne(id);		
 	}
 	

@@ -4,6 +4,7 @@ import com.pinyougou.pojo.Brand;
 import entity.PageResult;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 品牌接口
@@ -60,4 +61,10 @@ public interface BrandService {
      * @param id 编号
      */
     void deleteBrand(Long[] id);
+
+    /**
+     * 品牌下拉列表
+     * @return List<Map>
+     */
+    List<Map> selectOptionList() ;
 }
